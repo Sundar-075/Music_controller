@@ -34,12 +34,12 @@ class CreateRoomView(APIView):
                 room.votes_to_skip = votes_to_skip
 
                 room.save(update_fields=['guest_can_pause', 'votes_to_skip'])
-                self.request.session['room_Code'] = room.code
+                self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
             else:
                 room = Room(host=host, guest_can_pause=guest_can_pause,
                             votes_to_skip=votes_to_skip)
-                self.request.session['room_Code'] = room.code
+                self.request.session['room_code'] = room.code
                 room.save()
 
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
