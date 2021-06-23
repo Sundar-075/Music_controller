@@ -67,7 +67,7 @@ export default class Home extends Component {
             path="/"
             render={() => {
               return this.state.roomCode ? (
-                <Redirect to={"/room/" + this.state.roomCode}></Redirect>
+                <Redirect to={`/room/${this.state.roomCode}`} />
               ) : (
                 this.renderHomePage()
               );
