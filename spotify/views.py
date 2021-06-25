@@ -1,14 +1,20 @@
 from django.http import response
 from django.shortcuts import redirect, render
 from django.views.generic.base import RedirectView
+from requests.models import REDIRECT_STATI
 # import requests
 from rest_framework.response import Response
-from .credentials import *
+from decouple import config
 from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
 from .util import is_spotify_authenticated, update_or_create_user_tokens
 # Create your views here.
+
+
+CLIENT_ID = config('CLIENT_ID')
+CLIENT_SECRET = config('CLIENT_SECRET')
+REDIRECT_URI = config('REDIRECT_URI')
 
 
 class AuthURl(APIView):

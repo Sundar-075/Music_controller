@@ -4,7 +4,10 @@ from django.http import response
 from .models import SpotifyToken
 from django.utils import timezone
 from requests import post
-from .credentials import *
+from decouple import config
+
+CLIENT_ID = config('CLIENT_ID')
+CLIENT_SECRET = config('CLIENT_SECRET')
 
 
 def get_user_token(session_id):
