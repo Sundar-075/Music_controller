@@ -11,15 +11,19 @@ export default class Room extends Component {
       isHost: false,
       showSettings: false,
       spotify_authenticated: false,
+      song: {},
     };
     this.roomCode = this.props.match.params.roomCode;
     this.leaveRoom = this.leaveRoom.bind(this);
-    this.getRoom();
+
     this.updateShowSettings = this.updateShowSettings.bind(this);
     this.renderSettingButton = this.renderSettingButton.bind(this);
     this.authenticateSpotify = this.authenticateSpotify.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
+    this.getRoom();
+    // this.g
   }
+
   getRoom() {
     fetch("/api/get-room" + "?code=" + this.roomCode)
       .then((response) => {
@@ -64,6 +68,20 @@ export default class Room extends Component {
       this.props.leaveRoomCallback();
       this.props.history.push("/");
     });
+  }
+
+  getCurrentSong() {
+    fetch("/spotify/current-song")
+      .then((response) => {
+        if (!response.ok) {
+          return {};
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.setState({ song: data });
+      });
   }
 
   updateShowSettings(value) {
@@ -123,7 +141,7 @@ export default class Room extends Component {
             Code :{this.roomCode}
           </Typography>
         </Grid>
-        <Grid item xs={12} align="center">
+        {/* <Grid item xs={12} align="center">
           <Typography variant="h6" component="h6">
             votes:{this.state.votesToSkip.toString()}
           </Typography>
@@ -137,7 +155,7 @@ export default class Room extends Component {
           <Typography variant="h6" component="h6">
             host:{this.state.isHost.toString()}
           </Typography>
-        </Grid>
+        </Grid> */}
         {this.state.isHost ? this.renderSettingButton() : null}
         <Grid item xs={12} align="center">
           <Button
